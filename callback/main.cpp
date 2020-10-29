@@ -10,6 +10,7 @@ struct Foo {
 };
 
 void print_num(int i) { std::cout << i << '\n'; }
+void print_2num(int i, int j) { std::cout << "i:" << i << "j:" << j << '\n'; }
 
 struct PrintNum {
     void operator()(int i) const { std::cout << i << '\n'; }
@@ -18,39 +19,45 @@ struct PrintNum {
 int main() {
     // 存储自由函数
     std::function<void(int)> f_display = print_num;
-    f_display(-9);
+    f_display(-9); // -9
     // f_display = std::function<void(int)>{};
     // f_display(-8); //std::bad_function_call
 
 
     // 存储 lambda
     std::function<void()> f_display_42 = []() { print_num(42); };
-    f_display_42();
+    f_display_42(); // 42
 
     // 存储到 std::bind 调用的结果
     std::function<void()> f_display_43 = std::bind(print_num, 43);
-    f_display_43();
+    f_display_43(); // 43
+
+    std::function<void(int)> f_display_44 = std::bind(print_2num, 22, std::placeholders::_1);
+    f_display_44(23); // i:22j:23
 
     // 存储到成员函数的调用
     std::function<void(const Foo&, int)> f_add_display = &Foo::print_add;
-    const Foo foo(44);
-    f_add_display(foo, 1);
-    f_add_display(45, 1); // 构造然后调用,析构
+    const Foo foo(44); //ctor Foo, num:44
+    f_add_display(foo, 1); // 45
+    f_add_display(55, 1); // 构造然后调用,析构
+                        // ctor Foo, num:55
+                        // 56
+                        // dtor Foo, num:55
 
     // 存储到数据成员访问器的调用
     std::function<int(Foo const&)> f_num = &Foo::num_;
-    std::cout << "num_: " << f_num(foo) << '\n';
+    std::cout << "num_: " << f_num(foo) << '\n'; // num_: 44
 
     // 存储到成员函数及对象的调用
     using std::placeholders::_1;
     std::function<void(int)> f_add_display2 = std::bind(&Foo::print_add, foo, _1); // foo对象会被拷贝一份
     f_add_display2(2);
 
-    // 存储到成员函数和对象指针的调用
+    /*// 存储到成员函数和对象指针的调用
     std::function<void(int)> f_add_display3 = std::bind(&Foo::print_add, &foo, _1); // foo对象会被拷贝一份
     f_add_display3(3);
 
     // 存储到函数对象的调用
     std::function<void(int)> f_display_obj = PrintNum();
-    f_display_obj(18);
+    f_display_obj(18);*/
 }
