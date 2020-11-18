@@ -5,7 +5,7 @@ import tkinter
 from tkinter import *
 
 while True:
-    time.sleep(3)
+    time.sleep(30*60)
 
     # 进入消息循环
     top = tkinter.Tk()
