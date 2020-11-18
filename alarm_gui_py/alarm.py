@@ -5,10 +5,11 @@ import tkinter
 from tkinter import *
 
 while True:
-    time.sleep(30*60)
+    time.sleep(3)
 
     # 进入消息循环
     top = tkinter.Tk()
+    top.wm_attributes('-topmost',1) # 置顶
     textlist  = Listbox(top)
 
     text = ['have a rest']
