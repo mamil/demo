@@ -1,39 +1,35 @@
 #include <memory>
 #include <iostream>
 
-class A
-{
+class Empty {
 public:
-    A(int n):n_(n){};
-    void print()
-    {
-        std::cout <<n_ << std::endl;
-    };
     int n_;
-};
+    Empty() = default;
+    Empty (const Empty& a) {
+        printf ("拷贝构造\n");
+        this->n_ = a.n_;
+    }
 
-class man
-{
-public:
-    man(int age):age_(age){};
-    int age_;
-    A a = A(age_);
+    Empty& operator= (const Empty& a) {
+        printf ("赋值构造\n");
+        this->n_ = a.n_;
+    }
+    Empty (int n) {
+        printf ("address: %x\n", this);
+        n_ = n;
+    }
+    ~Empty() {
+        printf ("delete %x\n", this);
+    }
 };
 
 int main()
 {
-    std::shared_ptr<man> manPtr;
-    if (!manPtr)
-    {
-        std::cout << "111" << std::endl; // ok
-    }
+    Empty a(1);
+    Empty c = a;
 
-    manPtr = std::make_shared<man>(333);
-    if (!manPtr)
-    {
-        std::cout << "222" << std::endl; // not
-    }
+    printf ("=============\n");
 
-    manPtr->a.print();
-
+    Empty d;
+    d = a;
 }
