@@ -22,10 +22,10 @@ public:
 int main()
 {
     Empty a;
-    Empty c = a;
+    Empty c = a; // 拷贝构造
 
     printf ("=============\n");
 
     Empty d;
-    d = a;
+    d = a; // 赋值构造
 }
