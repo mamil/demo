@@ -39,9 +39,10 @@ void vector_test()
 {
     std::cout << "##################################vector_test" << std::endl;
     vector<int> v1;
-    v1.push_back(4);
+    std::cout << "capacity:" << v1.capacity() << ", max_size:" << v1.max_size() << std::endl;
+    v1.push_back(1);
+    v1.push_back(2);
     v1.push_back(3);
-    v1.push_back(9);
     std::sort(v1.begin(), v1.end(), std::greater<int>());
 
     for (auto i : v1)
@@ -49,16 +50,45 @@ void vector_test()
         std::cout << i << std::endl;
     }
 
-    auto v2 = vector<int>();
-    for (auto i : v2)
+    std::cout << std::endl;
+
+    for (auto it = v1.begin(); it != v1.end();) // 最好把++it 移动到内部控制，不然erase，insert之后，很容易多移动，少移动
+    {
+        if(*it == 3)
+        {
+            it = v1.erase(it); // 迭代器失效，返回删除之后的元素
+            continue; // 如果不continue，又会 ++ ，会跳过一个元素
+        }
+        else if (*it == 2)
+        {
+            *it = -1; // 改内容
+                    // (gdb) p *it
+                    // $7 = (int &) @0x60d014: 2
+                    // *it 是一个引用
+            ++it;
+        }
+        else if (*it == 1)
+        {
+            it = v1.insert(it, 0);
+            it += 2; // 现在是-1,0,1 , it指向0，需要+2才能到1之后，不然会一直insert
+        }
+    }
+    for (auto i : v1)
     {
         std::cout << i << std::endl;
+    }
+
+    auto it = v1.begin();
+    v1.reserve(10); // 触发空间重新分配
+    if (it != v1.begin())
+    {
+        std::cout << "moved!" << std::endl;
     }
 }
 
 void map_test()
 {
-    std::cout << "##################################" << std::endl;
+    std::cout << "################################## map_test" << std::endl;
 
     std::map<int, int> in;
     in[1]=2;
