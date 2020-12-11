@@ -39,15 +39,19 @@ void vector_test()
 {
     std::cout << "##################################vector_test" << std::endl;
     vector<int> v1;
-    std::cout << "capacity:" << v1.capacity() << ", max_size:" << v1.max_size() << std::endl;
+    std::cout << "capacity:" << v1.capacity() << ", max_size:" << v1.max_size() << std::endl; // capacity:0, max_size:4611686018427387903
     v1.push_back(1);
     v1.push_back(2);
     v1.push_back(3);
     std::sort(v1.begin(), v1.end(), std::greater<int>());
 
+    std::cout << v1.front() << "~" << v1.back() << " reverted" << std::endl; // 3~1 reverted
+    v1.front() = 1;
+    v1.back() = 3;
+
     for (auto i : v1)
     {
-        std::cout << i << std::endl;
+        std::cout << i << std::endl; // 1 2 3
     }
 
     std::cout << std::endl;
@@ -75,14 +79,37 @@ void vector_test()
     }
     for (auto i : v1)
     {
-        std::cout << i << std::endl;
+        std::cout << i << std::endl; // 0 -1 1
     }
 
     auto it = v1.begin();
     v1.reserve(10); // 触发空间重新分配
     if (it != v1.begin())
     {
-        std::cout << "moved!" << std::endl;
+        std::cout << "moved!" << std::endl; // moved!
+    }
+
+    v1.assign(2, 9); // 清空旧的，添加新的
+    for (auto i : v1)
+    {
+        std::cout << i << std::endl; // 9 9
+    }
+
+    vector<int> v2;
+    v2.assign(3,7);
+    auto it1 = v1.begin();
+    auto it2 = v2.begin();
+    std::cout << "v1:" << *it1 << ", v2:" << *it2 << std::endl; // v1:9, v2:7
+    v1.swap(v2);
+    std::cout << "v1:" << *it1 << ", v2:" << *it2 << std::endl; // v1:9, v2:7 ,指向的位置不变，迭代器还是有效
+    std::cout << "v1:" << *v1.begin() << ", v2:" << *v2.begin() << std::endl; // v1:7, v2:9 ，但是名字上容易有歧义，现在v1，v2内容互换，
+                                                                            // 看起来是v1的迭代器内容为v2里面的。swap之后还是重新初始化吧
+
+    it = v1.begin();
+    v1.clear(); // 清空数据，但是不一定会重新分配空间
+    if (it == v1.begin())
+    {
+        std::cout << "cleared!" << std::endl; // cleared!
     }
 }
 
