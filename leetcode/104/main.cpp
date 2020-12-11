@@ -28,19 +28,28 @@ struct TreeNode {
     自己有root算一层，然后左右分支最大的，加自己这一层，就是这个root下的最大值。
     以此类推，左右分别计算自己的最大值
 */
+// class Solution {
+// public:
+//     int maxDepth(TreeNode* root) {
+//         if (root == nullptr)
+//         {
+//             return 0;
+//         }
+//         int max = 1;
+//         auto left = maxDepth(root->left);
+//         auto right = maxDepth(root->right);
+//         return max + std::max(left, right);
+//     }
+// };
+
+//简化一下，执行时间变长了....
 class Solution {
 public:
     int maxDepth(TreeNode* root) {
-        if (root == nullptr)
-        {
-            return 0;
-        }
-        int max = 1;
-        auto left = maxDepth(root->left);
-        auto right = maxDepth(root->right);
-        return max + std::max(left, right);
+        return root == nullptr ? 0 : std::max(maxDepth(root->left), maxDepth(root->right)) +1;
     }
 };
+
 
 int main()
 {
