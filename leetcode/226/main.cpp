@@ -20,6 +20,10 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+/*
+    节点非空，就交换左右子节点
+    然后递归左节点，右节点
+*/
 class Solution {
 public:
     TreeNode* invertTree(TreeNode* root) {
