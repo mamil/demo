@@ -25,6 +25,7 @@ public:
     vector<vector<int>> levelOrder(TreeNode* root) {
         std::deque<TreeNode*> q; // 存储遍历节点的队列
         std::vector<std::vector<int>> all;
+        if (! root) return all;
         all.emplace_back();
 
         q.push_back(root);
@@ -80,6 +81,16 @@ int main()
     Solution s;
     auto res = s.levelOrder(node1);
 
+    for (auto it1 : res)
+    {
+        for (auto it2 : it1)
+        {
+            std::cout <<it2 << " ";
+        }
+        std::cout << std::endl;
+    }
+
+    res = s.levelOrder(nullptr);
     for (auto it1 : res)
     {
         for (auto it2 : it1)
