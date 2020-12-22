@@ -48,11 +48,11 @@ public:
                 continue;
             }
 
-            if (level % 2 == 0)
+            if (level % 2 == 0) // 偶数层正常从尾部加
             {
                 all[level].push_back(q.front()->val);
             }
-            else
+            else // 奇数层从头部加
             {
                 all[level].insert(all[level].begin(), q.front()->val);
             }
