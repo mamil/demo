@@ -9,7 +9,7 @@ void *mymemcpy(void *dest, const void *src, size_t n)
     assert(src);
 	void *ret = dest;
 
-    src = (char *)src + n - 1;
+    src = (char *)src + n - 1; // 这里-1是因为src已经算一个了
     dest = (char *)dest + n - 1;
     while (n--)
     {
