@@ -139,6 +139,17 @@ void map_test()
 
     test.clear(); // 会清空test，in不受影响
 
+    in[2] = 3;
+    in[3] = 4;
+
+    auto itf = in.find(3);
+    if (itf != in.end())
+    {
+        std::cout << "find first:" << itf->first << ", second:" << itf->second << std::endl; // find first:3, second:4
+        in.insert({4,5});
+        std::cout << "find first:" << itf->first << ", second:" << itf->second << std::endl; // find first:3, second:4
+        std::cout << "in[4]:" << in[4] <<std::endl; // in[4]:5
+    }
 
 }
 int main() {
