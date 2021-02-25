@@ -119,41 +119,25 @@ void map_test()
 
     std::map<int, int> in;
     in[1]=2;
+    auto it = in.insert({1,999}); // 插入会失败,返回现有的键值对
+    if (it.second == false)
+    {
+        std::cout << "insert fail, first:" << it.first->first << ", " << it.first->second << std::endl; // insert fail, first:1, 2
+    }
+    std::cout << "in[1]:" << in[1] << std::endl; // in[1]:2
+
     std::map<int,std::map<int, int>> test;
     test[3]=in;
     for (auto it : test)
     {
-        std::cout << it.first << std::endl;;
+        std::cout << it.first << std::endl;; // 3
         for(auto it2: it.second)
         {
-            std::cout << it2.first << ":" << it2.second << std::endl;
-        }
-    }
-    test.erase(3);
-
-    auto testit = test.find(3)->second;
-    testit.erase(1);
-
-    for (auto it : test)
-    {
-        std::cout << it.first<< std::endl;;
-        for(auto it2: it.second)
-        {
-            std::cout << it2.first << ":" << it2.second << std::endl;
+            std::cout << it2.first << ":" << it2.second << std::endl; // 1:2
         }
     }
 
-    test.erase(3);
-
-    for (auto it : test)
-    {
-        std::cout << it.first<< std::endl;;
-        for(auto it2: it.second)
-        {
-            std::cout << it2.first << ":" << it2.second << std::endl;
-        }
-    }
-    std::cout << "##################################222" << std::endl;
+    test.clear(); // 会清空test，in不受影响
 
 
 }
