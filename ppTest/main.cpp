@@ -1,8 +1,9 @@
 #include<iostream>
+#include<utility>
 using namespace std;
 class Point
 {
-private:
+public:
     int _x;
     int _y;
 public:
@@ -11,9 +12,10 @@ public:
     Point operator ++(int);//后置型
     Point operator --();//前置型
     Point operator --(int);//后置型
+    Point(const Point& p) {_x = p._x; _y = p._y; cout << "copy constructor called "; this->autoDisplay();}
     void Display();
     void autoDisplay();
-    Point pp() { _x++; _y++; this->autoDisplay(); return *this; }
+    Point pp() { _x++; _y++; std::cout<<"pp "; this->autoDisplay(); return *this; }
     Point mm() { _x--; _y--; return *this; }
     ~Point(){}
 };
@@ -49,7 +51,7 @@ void Point::autoDisplay()
 
 void inFuncTest(Point p)
 {
-    std::cout << "in:" << std::endl;
+    std::cout << "in: ";
     p.Display();
 }
 
@@ -60,7 +62,7 @@ int main()
     // b = ++a;
     // a.Display();
     // b.Display();
-    b = a++; // auto (2,3)
+    //b = a++;
     // a.Display();
     // b.Display();
     // b = --a;
@@ -88,13 +90,14 @@ int main()
 // 3.第三步，前置自减运算，先自减，再赋值给b。操作结束后a为（2，3），b为（2，3）。
 // 4.第四步，后置自减运算，先赋值给b，后自减，操作结束后a为（1，2），b为（2，3）。
 
-    std::cout << "in Func Test##" << std::endl;
+    std::cout << "in Func Test##################################" << std::endl;
     inFuncTest(a++);
-    std::cout << "out" << std::endl;
+    std::cout << "out ";
     a.Display();
-// auto ( 3 , 4 ) // inFuncTest里面的a++被执行
-// in:
-// ( 2 , 3 ) // 函数被执行
-// out
-// ( 3 , 4 )
+// in Func Test##################################
+// copy constructor called auto ( 1 , 2 ) // 传入实参
+// pp auto ( 2 , 3 ) // 自增
+// copy constructor called auto ( 2 , 3 ) // 自增返回的拷贝
+// in: ( 1 , 2 ) // 函数调用
+// out ( 2 , 3 ) // 外部手动调用
 }
