@@ -118,6 +118,7 @@ void map_test()
     std::cout << "################################## map_test" << std::endl;
 
     std::map<int, int> in;
+    in[9] = 10;
     in[1]=2;
     auto it = in.insert({1,999}); // 插入会失败,返回现有的键值对
     if (it.second == false)
@@ -149,6 +150,27 @@ void map_test()
         in.insert({4,5});
         std::cout << "find first:" << itf->first << ", second:" << itf->second << std::endl; // find first:3, second:4
         std::cout << "in[4]:" << in[4] <<std::endl; // in[4]:5
+    }
+    itf = in.begin();
+    std::cout<< "loop##" << std::endl;
+    for (; itf != in.end(); ) // 会按照key从小到大遍历
+    {
+        std::cout << "find first:" << itf->first << ", second:" << itf->second << std::endl; // find first:1, second:2
+        if(itf->first == 2)
+        {
+            std::cout << "in erase:" << itf->first << std::endl;
+            in.erase(itf++); // 分三步1、itf传值到erase函数 2、itf自增 3、对传入的itf值执行erasr， 从而保证itf不会失效
+        }
+        else
+        {
+            ++itf; // 不能在for里面，不然erase的时候已经指向下一个了，再++会多走一个
+        }
+    }
+    itf = in.begin();
+    std::cout<< "loop2##" << std::endl;
+    for (; itf != in.end(); ++itf) // 会按照key从小到大遍历
+    {
+        std::cout << "find first:" << itf->first << ", second:" << itf->second << std::endl; // find first:1, second:2
     }
 
 }
