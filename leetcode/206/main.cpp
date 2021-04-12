@@ -69,7 +69,7 @@ public:
             pre = head;
             head = tmp;
         }
-        return pre;
+        return pre; // 注意返回什么
     }
 };
 
