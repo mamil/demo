@@ -46,15 +46,23 @@ void vector_test()
     std::sort(v1.begin(), v1.end(), std::greater<int>());
 
     std::cout << v1.front() << "~" << v1.back() << " reverted" << std::endl; // 3~1 reverted
+
+    // reset
     v1.front() = 1;
     v1.back() = 3;
 
     for (auto i : v1)
     {
-        std::cout << i << std::endl; // 1 2 3
+        std::cout << i << " "; // 1 2 3
+    }
+    std::cout << std::endl;
+
+    for (int i = 0; i < v1.size(); ++i)
+    {
+        std::cout << v1.begin()[i] << " "; // 1 2 3
     }
 
-    std::cout << std::endl;
+    std::cout << std::endl << std::endl;
 
     for (auto it = v1.begin(); it != v1.end();) // 最好把++it 移动到内部控制，不然erase，insert之后，很容易多移动，少移动
     {
