@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    if ((fd = open("test.dat", O_RDONLY)) == -1) {//打开文件自身
+    if ((fd = open("test.dat", O_RDWR)) == -1) {//打开文件自身
         perror("open");
         exit(1);
     }
@@ -37,7 +37,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    data = (char*)mmap((caddr_t)0, sbuf.st_size, PROT_READ, MAP_SHARED, fd, 0);
+    data = (char*)mmap((caddr_t)0, sbuf.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
 
     if (data == (caddr_t)(-1)) {
         perror("mmap");
@@ -45,6 +45,10 @@ int main(int argc, char* argv[]) {
     }
 
     printf("byte at offset %d is '%c'\n", offset, data[offset]);
+
+    // write
+    std::string s = "te\n";
+    memcpy(data, s.c_str(), s.size());
 
     return 0;
 }
