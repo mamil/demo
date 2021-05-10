@@ -48,7 +48,12 @@ int main(int argc, char* argv[]) {
 
     // write
     std::string s = "te\n";
-    memcpy(data, s.c_str(), s.size());
+    int pos = 0;
+    memcpy(data + pos, s.c_str(), s.size());
+    pos += s.size();
+
+    memcpy(data + pos, s.c_str(), s.size());
+    pos += s.size();
 
     return 0;
 }
